@@ -1,15 +1,15 @@
 {
   "slug": "piruetas-popusintes",
-  "version": "0.0.1",
-  "license": "MIT",
   "name": "popusintes",
+  "version": "2.0.0",
+  "license": "MIT",
   "brand": "piruetas",
   "author": "piruetas",
   "authorUrl": "https://piruetas.xyz",
   "sourceUrl": "https://github.com/piruetasxyz/popusintes-rack",
   "modules": [
     {
-      "slug": "popusintes-panel",
+      "slug": "panel",
       "name": "panel",
       "description": "panel",
       "tags": [
@@ -17,7 +17,7 @@
       ]
     },
     {
-      "slug": "popusintes-relo",
+      "slug": "relo",
       "name": "relo",
       "description": "reloj",
       "tags": [

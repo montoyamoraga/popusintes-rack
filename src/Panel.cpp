@@ -1,6 +1,6 @@
-#include "Panel.hpp"
+#include "Popusintes.hpp"
 
-/* MODULE */
+// modulo
 struct PanelModule : Module
 {
     enum ParamIds
@@ -35,7 +35,7 @@ struct PanelModule : Module
     }
 };
 
-/* MODULE WIDGET */
+// widget
 struct PanelModuleWidget : ModuleWidget
 {
     PanelModuleWidget(PanelModule *module)
@@ -46,4 +46,4 @@ struct PanelModuleWidget : ModuleWidget
     }
 };
 
-Model *modelPanel = createModel<PanelModule, PanelModuleWidget>("Panel");
+Model *modelPanel = createModel<PanelModule, PanelModuleWidget>("panel");

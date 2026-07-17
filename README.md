@@ -1,4 +1,4 @@
-# popusintes-vcv-rack
+# popusintes-rack
 
 ## Bibliografía
 

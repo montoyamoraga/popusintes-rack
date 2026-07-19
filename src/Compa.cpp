@@ -1,7 +1,7 @@
 #include "Popusintes.hpp"
 
 // modulo
-struct SecuModule : Module
+struct CompaModule : Module
 {
     enum ParamIds
     {
@@ -27,7 +27,7 @@ struct SecuModule : Module
         NUM_LIGHTS,
     };
 
-    SecuModule()
+    CompaModule()
     {
 
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
@@ -58,13 +58,13 @@ struct SecuModule : Module
 };
 
 // widget
-struct SecuModuleWidget : ModuleWidget
+struct CompaModuleWidget : ModuleWidget
 {
-    SecuModuleWidget(SecuModule *module)
+    CompaModuleWidget(CompaModule *module)
     {
 
         setModule(module);
-        setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/SecuModule.svg")));
+        setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/CompaModule.svg")));
 
         // tornillos
         addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
@@ -73,15 +73,15 @@ struct SecuModuleWidget : ModuleWidget
         addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
         // entradas
-        addInput(createInputCentered<PJ301MPort>(mm2px(Vec(50.8 * 0.20, 128.4 * 0.50)), module, SecuModule::ENTRADA_A));
-        addInput(createInputCentered<PJ301MPort>(mm2px(Vec(50.8 * 0.80, 128.4 * 0.50)), module, SecuModule::ENTRADA_B));
+        addInput(createInputCentered<PJ301MPort>(mm2px(Vec(25.4 * 0.20, 128.4 * 0.50)), module, CompaModule::ENTRADA_A));
+        addInput(createInputCentered<PJ301MPort>(mm2px(Vec(25.4 * 0.80, 128.4 * 0.50)), module, CompaModule::ENTRADA_B));
 
         //  salidas
-        addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(50.8 * 0.5, 128.4 * 0.80)), module, SecuModule::SALIDA_COMPARADOR));
+        addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(25.4 * 0.5, 128.4 * 0.80)), module, CompaModule::SALIDA_COMPARADOR));
 
         // luces
-        addChild(createLightCentered<LargeLight<GreenLight>>(mm2px(Vec(50.8 * 0.5, 128.4 * 0.70)), module, SecuModule::LUZ_SALIDA));
+        addChild(createLightCentered<LargeLight<GreenLight>>(mm2px(Vec(25.4 * 0.5, 128.4 * 0.70)), module, CompaModule::LUZ_SALIDA));
     }
 };
 
-Model *modelSecu = createModel<SecuModule, SecuModuleWidget>("secu");
+Model *modelCompa = createModel<CompaModule, CompaModuleWidget>("compa");

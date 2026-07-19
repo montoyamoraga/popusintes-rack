@@ -107,15 +107,37 @@ struct SecuModuleWidget : ModuleWidget
         addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
         // entradas
-        addInput(createInputCentered<PJ301MPort>(mm2px(Vec(50.8 * 0.50, 128.4 * 0.50)), module, SecuModule::ENTRADA_A));
+        addInput(createInputCentered<PJ301MPort>(mm2px(Vec(50.8 * 0.50, 128.4 * 0.40)), module, SecuModule::ENTRADA_A));
+
+        // params
+        for (int i = 0; i < SecuModule::NUM_PARAMS; i++)
+        {
+            // las primeras 4 van a una altura
+            if (i < 4)
+            {
+                addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(50.8 * (0.20 + 0.2 * (i % 4)), 128.4 * 0.50)), module, SecuModule::PARAM_PASO_0 + i));
+            }
+            // las siguientes 4 van a otra altura
+            else
+            {
+                addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(50.8 * (0.20 + 0.2 * (i % 4)), 128.4 * 0.60)), module, SecuModule::PARAM_PASO_0 + i));
+            }
+        }
 
         //  salidas
-        addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(50.8 * 0.5, 128.4 * 0.80)), module, SecuModule::SALIDA_SECUENCIADOR));
+        addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(50.8 * 0.50, 128.4 * 0.80)), module, SecuModule::SALIDA_SECUENCIADOR));
 
         // luces
         for (int i = 0; i < SecuModule::NUM_LIGHTS; i++)
         {
-            addChild(createLightCentered<LargeLight<GreenLight>>(mm2px(Vec(50.8 * (0.15 + 0.1 * i), 128.4 * 0.70)), module, SecuModule::LUZ_PASO_0 + i));
+            if (i < 4)
+            {
+                addChild(createLightCentered<MediumLight<GreenLight>>(mm2px(Vec(50.8 * (0.20 + 0.2 * (i % 4)), 128.4 * 0.70)), module, SecuModule::LUZ_PASO_0 + i));
+            }
+            else
+            {
+                addChild(createLightCentered<MediumLight<GreenLight>>(mm2px(Vec(50.8 * (0.20 + 0.2 * (i % 4)), 128.4 * 0.75)), module, SecuModule::LUZ_PASO_0 + i));
+            }
         }
     }
 };

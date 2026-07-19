@@ -1,70 +1,104 @@
 #include "Popusintes.hpp"
 
-// modulo
-struct CompaModule : Module
+// secuenciador con entrada de reloj
+// sensible a la subida de la señal
+// de 8 pasos y 8 perillas
+// con boton para resetear
+
+// para celebrar la materia computacional
+// se contaran los pasos de 0 a 7
+
+// decidir que hacer si se desconecta el reloj
+
+struct SecuModule : Module
 {
     enum ParamIds
     {
+        PARAM_PASO_0,
+        PARAM_PASO_1,
+        PARAM_PASO_2,
+        PARAM_PASO_3,
+        PARAM_PASO_4,
+        PARAM_PASO_5,
+        PARAM_PASO_6,
+        PARAM_PASO_7,
         NUM_PARAMS,
     };
 
     enum InputIds
     {
         ENTRADA_A,
-        ENTRADA_B,
         NUM_INPUTS,
     };
 
     enum OutputIds
     {
-        SALIDA_COMPARADOR,
+        SALIDA_SECUENCIADOR,
         NUM_OUTPUTS,
     };
 
     enum LightsIds
     {
-        LUZ_SALIDA,
+        LUZ_PASO_0,
+        LUZ_PASO_1,
+        LUZ_PASO_2,
+        LUZ_PASO_3,
+        LUZ_PASO_4,
+        LUZ_PASO_5,
+        LUZ_PASO_6,
+        LUZ_PASO_7,
         NUM_LIGHTS,
     };
 
-    CompaModule()
+    // schmitt trigger para detectar subidas de entrada
+    dsp::SchmittTrigger detectorBordes;
+
+    // variable para almacenar paso actual
+    int pasoActual = 0;
+
+    SecuModule()
     {
 
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
+
+        // configurar pasos
+        for (int i = 0; i < SecuModule::NUM_PARAMS; i++)
+        {
+            configParam(PARAM_PASO_0 + i, 0.0, 5.0, 1.0);
+        }
     }
 
     void process(const ProcessArgs &args) override
     {
-        // detectar si entrada A y entrada B tienen conexion
-        if (inputs[ENTRADA_A].isConnected() && inputs[ENTRADA_B].isConnected())
-        {
-            // comparar si
-            // voltaje en entrada A es mayor que en entrada B
-            float salida = inputs[ENTRADA_A].getVoltage() > inputs[ENTRADA_B].getVoltage();
 
-            // asignar ese voltaje a la salida
-            // multiplicar por 10.f
-            outputs[SALIDA_COMPARADOR].setVoltage(10.f * salida);
-
-            // asignar ese voltaje a la luz
-            lights[LUZ_SALIDA].setBrightness(salida);
-        }
-        else
+        // si detector de bordes detecta nuevo voltaje
+        if (detectorBordes.process(inputs[ENTRADA_A].getVoltage()))
         {
-            outputs[SALIDA_COMPARADOR].setVoltage(0.f);
-            lights[LUZ_SALIDA].setBrightness(0.f);
+            pasoActual = pasoActual + 1;
+            pasoActual = pasoActual % 8;
         }
+
+        for (int i = 0; i < NUM_LIGHTS; i++)
+        {
+            // apagar todas las luces
+            lights[i].setSmoothBrightness(0.f, 5e-6f);
+            // prender solamente la de interes
+            lights[pasoActual].setSmoothBrightness(1.f, 5e-6f);
+        }
+
+        // emitir salida
+        outputs[SALIDA_SECUENCIADOR].setVoltage(params[pasoActual].getValue());
     }
 };
 
 // widget
-struct CompaModuleWidget : ModuleWidget
+struct SecuModuleWidget : ModuleWidget
 {
-    CompaModuleWidget(CompaModule *module)
+    SecuModuleWidget(SecuModule *module)
     {
 
         setModule(module);
-        setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/CompaModule.svg")));
+        setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/SecuModule.svg")));
 
         // tornillos
         addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
@@ -73,15 +107,17 @@ struct CompaModuleWidget : ModuleWidget
         addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
         // entradas
-        addInput(createInputCentered<PJ301MPort>(mm2px(Vec(25.4 * 0.20, 128.4 * 0.50)), module, CompaModule::ENTRADA_A));
-        addInput(createInputCentered<PJ301MPort>(mm2px(Vec(25.4 * 0.80, 128.4 * 0.50)), module, CompaModule::ENTRADA_B));
+        addInput(createInputCentered<PJ301MPort>(mm2px(Vec(50.8 * 0.50, 128.4 * 0.50)), module, SecuModule::ENTRADA_A));
 
         //  salidas
-        addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(25.4 * 0.5, 128.4 * 0.80)), module, CompaModule::SALIDA_COMPARADOR));
+        addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(50.8 * 0.5, 128.4 * 0.80)), module, SecuModule::SALIDA_SECUENCIADOR));
 
         // luces
-        addChild(createLightCentered<LargeLight<GreenLight>>(mm2px(Vec(25.4 * 0.5, 128.4 * 0.70)), module, CompaModule::LUZ_SALIDA));
+        for (int i = 0; i < SecuModule::NUM_LIGHTS; i++)
+        {
+            addChild(createLightCentered<LargeLight<GreenLight>>(mm2px(Vec(50.8 * (0.15 + 0.1 * i), 128.4 * 0.70)), module, SecuModule::LUZ_PASO_0 + i));
+        }
     }
 };
 
-Model *modelCompa = createModel<CompaModule, CompaModuleWidget>("compa");
+Model *modelSecu = createModel<SecuModule, SecuModuleWidget>("secu");

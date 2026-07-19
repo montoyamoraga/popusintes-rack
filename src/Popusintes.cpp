@@ -6,6 +6,7 @@ void init(rack::Plugin *p)
 {
 	pluginInstance = p;
 
+	p->addModel(modelCompa);
 	p->addModel(modelPanel);
 	p->addModel(modelRelo);
 }

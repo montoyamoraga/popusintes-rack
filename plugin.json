@@ -9,6 +9,14 @@
   "sourceUrl": "https://github.com/piruetasxyz/popusintes-rack",
   "modules": [
     {
+      "slug": "ataconso",
+      "name": "ataconso",
+      "description": "interacciones entre dos chips 555",
+      "tags": [
+        "Oscillator"
+      ]
+    },
+    {
       "slug": "compa",
       "name": "compa",
       "description": "comparadora",

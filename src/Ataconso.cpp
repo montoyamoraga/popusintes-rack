@@ -100,7 +100,12 @@ struct AtaconsoModulo : Module
             timbreMs = TIMBRE_MS_MIN;
         }
 
-        if (disparo)
+        // el 555 monoestable real es no-reentrante: su pin de disparo es sensible a nivel,
+        // asi que un disparo mientras el pulso sigue activo se ignora en vez de extenderlo.
+        // sin este chequeo, cuando timbre es mayor al periodo del oscilador 1
+        // el pulso se re-extiende en cada disparo y la salida se queda pegada en alto (dc, sin sonido)
+        // en vez de completar su propio ciclo y volver a dispararse: el drone caracteristico de la apc
+        if (disparo && generadorPulso.remaining <= 0.f)
         {
             generadorPulso.trigger(timbreMs * 1e-3f);
         }

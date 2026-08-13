@@ -19,6 +19,7 @@ using namespace rack;
 extern Plugin *pluginInstance;
 
 // modulos
+extern Model *modeloAtaconso;
 extern Model *modeloCompa;
 extern Model *modeloEnvo;
 extern Model *modeloPane;

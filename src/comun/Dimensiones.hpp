@@ -16,6 +16,9 @@ namespace dimensiones
     constexpr float MODULO_ANCHO_10_HP = 50.80f;
     constexpr float MODULO_ALTURA_3_U = 128.4f;
 
+    constexpr float ATACONSO_ANCHO = MODULO_ANCHO_04_HP;
+    constexpr float ATACONSO_ALTURA = MODULO_ALTURA_3_U;
+
     constexpr float COMPA_ANCHO = MODULO_ANCHO_04_HP;
     constexpr float COMPA_ALTURA = MODULO_ALTURA_3_U;
 

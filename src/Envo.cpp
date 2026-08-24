@@ -179,14 +179,14 @@ struct EnvoModuloWidget : ModuleWidget
         addOutput(createOutputCentered<PJ301MPort>(
             posicionador.posicion(layout::PORCENTAJE_SALIDA_A_X, layout::PORCENTAJE_SALIDA_Y),
             modulo, EnvoModulo::SALIDA_ENVO_A));
-        addChild(createLightCentered<SmallLight<GreenLight>>(
+        addChild(createLightCentered<MediumLight<GreenLight>>(
             posicionador.posicion(layout::PORCENTAJE_LUCES_A_X, layout::PORCENTAJE_LUCES_Y),
             modulo, EnvoModulo::LUZ_ENVO_A));
 
         addOutput(createOutputCentered<PJ301MPort>(
             posicionador.posicion(layout::PORCENTAJE_SALIDA_B_X, layout::PORCENTAJE_SALIDA_Y),
             modulo, EnvoModulo::SALIDA_ENVO_B));
-        addChild(createLightCentered<SmallLight<GreenLight>>(
+        addChild(createLightCentered<MediumLight<GreenLight>>(
             posicionador.posicion(layout::PORCENTAJE_LUCES_B_X, layout::PORCENTAJE_LUCES_Y),
             modulo, EnvoModulo::LUZ_ENVO_B));
     }

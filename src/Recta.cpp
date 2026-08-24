@@ -236,11 +236,11 @@ struct RectaModuloWidget : ModuleWidget
             posicionador.posicion(layout::PORCENTAJE_COLUMNA_DER, layout::PORCENTAJE_SALIDA_Y),
             modulo, RectaModulo::SALIDA_RECTA_B));
 
-        addChild(createLightCentered<LargeLight<GreenLight>>(
+        addChild(createLightCentered<MediumLight<GreenLight>>(
             posicionador.posicion(layout::PORCENTAJE_COLUMNA_IZQ, layout::PORCENTAJE_LUZ_Y),
             modulo, RectaModulo::LUZ_SALIDA_A));
 
-        addChild(createLightCentered<LargeLight<GreenLight>>(
+        addChild(createLightCentered<MediumLight<GreenLight>>(
             posicionador.posicion(layout::PORCENTAJE_COLUMNA_DER, layout::PORCENTAJE_LUZ_Y),
             modulo, RectaModulo::LUZ_SALIDA_B));
     }

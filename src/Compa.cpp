@@ -115,7 +115,7 @@ struct CompaModuloWidget : ModuleWidget
         setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/CompaModulo.svg")));
 
         // tornillos
-        agregarTornillos(this);
+        agregarTornillos(this, true);
 
         Posicionador posicionador(dimensiones::COMPA_ANCHO, dimensiones::COMPA_ALTURA);
 

@@ -1,12 +1,13 @@
 #pragma once
 #include "plugin.hpp"
 
-// agrega los 4 tornillos estandar a un
-// ModuleWidget, en las esquinas
-// el centro de cada tornillo queda a
-// 1 HP del borde correspondiente
+// agrega los tornillos estandar a un ModuleWidget, en las esquinas
+// el centro de cada tornillo queda a 1 HP del borde correspondiente
+// paneles angostos (4 hp) solo alcanzan para una columna de
+// tornillos: con dos columnas los agujeros quedarian casi pegados
 inline void agregarTornillos(
-    ModuleWidget *widget)
+    ModuleWidget *widget,
+    bool unaColumna = false)
 {
     const float MITAD_TORNILLO = RACK_GRID_WIDTH / 2.f;
     const float DESDE_IZQUIERDA = RACK_GRID_WIDTH - MITAD_TORNILLO;
@@ -19,13 +20,16 @@ inline void agregarTornillos(
 
     widget->addChild(
         createWidget<ScrewBlack>(
-            Vec(DESDE_DERECHA, 0)));
-
-    widget->addChild(
-        createWidget<ScrewBlack>(
             Vec(DESDE_IZQUIERDA,
                 RACK_GRID_HEIGHT -
                     RACK_GRID_WIDTH)));
+
+    if (unaColumna)
+        return;
+
+    widget->addChild(
+        createWidget<ScrewBlack>(
+            Vec(DESDE_DERECHA, 0)));
 
     widget->addChild(
         createWidget<ScrewBlack>(

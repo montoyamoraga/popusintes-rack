@@ -137,7 +137,7 @@ struct EnvoModuloWidget : ModuleWidget
         setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/EnvoModulo.svg")));
 
         // tornillos
-        agregarTornillos(this);
+        agregarTornillos(this, true);
 
         Posicionador posicionador(dimensiones::ENVO_ANCHO, dimensiones::ENVO_ALTURA);
 

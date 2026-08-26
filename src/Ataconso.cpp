@@ -151,7 +151,7 @@ struct AtaconsoModuloWidget : ModuleWidget
         setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/AtaconsoModulo.svg")));
 
         // tornillos
-        agregarTornillos(this);
+        agregarTornillos(this, true);
 
         Posicionador posicionador(dimensiones::ATACONSO_ANCHO, dimensiones::ATACONSO_ALTURA);
 

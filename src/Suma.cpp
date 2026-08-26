@@ -45,7 +45,7 @@ struct SumaModuloWidget : ModuleWidget
         setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/SumaModulo.svg")));
 
         // tornillos
-        agregarTornillos(this);
+        agregarTornillos(this, true);
     }
 };
 

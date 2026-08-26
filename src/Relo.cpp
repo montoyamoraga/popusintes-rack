@@ -148,7 +148,7 @@ struct ReloModuloWidget : ModuleWidget
         setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/ReloModulo.svg")));
 
         // tornillos
-        agregarTornillos(this);
+        agregarTornillos(this, true);
 
         Posicionador posicionador(dimensiones::RELO_ANCHO, dimensiones::RELO_ALTURA);
 

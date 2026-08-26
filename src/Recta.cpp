@@ -189,7 +189,7 @@ struct RectaModuloWidget : ModuleWidget
         setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/RectaModulo.svg")));
 
         // tornillos
-        agregarTornillos(this);
+        agregarTornillos(this, true);
 
         Posicionador posicionador(dimensiones::RECTA_ANCHO, dimensiones::RECTA_ALTURA);
 
